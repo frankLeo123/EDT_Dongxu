@@ -1,0 +1,67 @@
+﻿Build started 2013/3/26 14:12:43.
+     1>Project "D:\Projects\EDT\EDT\EDT\EDT_Multi-thread_CPU\EDT_Multi-thread_CPU\EDT_Multi-thread_CPU.vcxproj" on node 2 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Release\EDT_Multi-thread_CPU.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "Release\EDT_Multi-thread_CPU.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt common.cpp main.cpp maurer2003.cpp "optimized-maurer2003.cpp"
+         common.cpp
+     1>C:\Program Files\Microsoft SDKs\Windows\v7.0A\include\basetsd.h(458): warning C4005: 'MAXINT' : macro redefinition
+                 d:\projects\edt\edt\edt\edt_multi-thread_cpu\edt_multi-thread_cpu\common.h(8) : see previous definition of 'MAXINT'
+         main.cpp
+     1>C:\Program Files\Microsoft SDKs\Windows\v7.0A\include\basetsd.h(458): warning C4005: 'MAXINT' : macro redefinition
+                 d:\projects\edt\edt\edt\edt_multi-thread_cpu\edt_multi-thread_cpu\common.h(8) : see previous definition of 'MAXINT'
+     1>main.cpp(50): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>main.cpp(92): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>main.cpp(93): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+     1>main.cpp(125): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>main.cpp(172): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>main.cpp(220): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>main.cpp(331): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+     1>main.cpp(347): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+     1>main.cpp(348): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(253) : see declaration of 'fscanf'
+     1>main.cpp(353): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(253) : see declaration of 'fscanf'
+         maurer2003.cpp
+     1>C:\Program Files\Microsoft SDKs\Windows\v7.0A\include\basetsd.h(458): warning C4005: 'MAXINT' : macro redefinition
+                 d:\projects\edt\edt\edt\edt_multi-thread_cpu\edt_multi-thread_cpu\common.h(8) : see previous definition of 'MAXINT'
+     1>maurer2003.cpp(30): warning C4101: 'b' : unreferenced local variable
+     1>maurer2003.cpp(119): warning C4101: 'i' : unreferenced local variable
+     1>maurer2003.cpp(119): warning C4101: 'j' : unreferenced local variable
+     1>maurer2003.cpp(334): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>maurer2003.cpp(335): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+         optimized-maurer2003.cpp
+     1>C:\Program Files\Microsoft SDKs\Windows\v7.0A\include\basetsd.h(458): warning C4005: 'MAXINT' : macro redefinition
+                 d:\projects\edt\edt\edt\edt_multi-thread_cpu\edt_multi-thread_cpu\common.h(8) : see previous definition of 'MAXINT'
+     1>optimized-maurer2003.cpp(30): warning C4101: 'b' : unreferenced local variable
+     1>optimized-maurer2003.cpp(119): warning C4101: 'i' : unreferenced local variable
+     1>optimized-maurer2003.cpp(119): warning C4101: 'j' : unreferenced local variable
+     1>optimized-maurer2003.cpp(244): warning C4101: 'fi' : unreferenced local variable
+     1>optimized-maurer2003.cpp(512): warning C4101: 'tmp2' : unreferenced local variable
+     1>optimized-maurer2003.cpp(512): warning C4101: 'tmp1' : unreferenced local variable
+     1>optimized-maurer2003.cpp(512): warning C4101: 'tmpy' : unreferenced local variable
+     1>optimized-maurer2003.cpp(512): warning C4101: 'tmpx' : unreferenced local variable
+     1>optimized-maurer2003.cpp(605): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+     1>optimized-maurer2003.cpp(606): warning C4244: 'initializing' : conversion from 'int' to 'float', possible loss of data
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Projects\EDT\EDT\EDT\EDT_Multi-thread_CPU\Release\EDT_Multi-thread_CPU.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\EDT_Multi-thread_CPU.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\Projects\EDT\EDT\EDT\EDT_Multi-thread_CPU\Release\EDT_Multi-thread_CPU.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\EDT\EDT\EDT\EDT_Multi-thread_CPU\Release\EDT_Multi-thread_CPU.lib" /MACHINE:X86 Release\common.obj
+         Release\main.obj
+         Release\maurer2003.obj
+         "Release\optimized-maurer2003.obj"
+         Generating code
+         Finished generating code
+         EDT_Multi-thread_CPU.vcxproj -> D:\Projects\EDT\EDT\EDT\EDT_Multi-thread_CPU\Release\EDT_Multi-thread_CPU.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\Projects\EDT\EDT\EDT\EDT_Multi-thread_CPU\Release\EDT_Multi-thread_CPU.exe;#1" /manifest "Release\EDT_Multi-thread_CPU.exe.intermediate.manifest"
+       FinalizeBuildStatus:
+         Deleting file "Release\EDT_Multi-thread_CPU.unsuccessfulbuild".
+         Touching "Release\EDT_Multi-thread_CPU.lastbuildstate".
+     1>Done Building Project "D:\Projects\EDT\EDT\EDT\EDT_Multi-thread_CPU\EDT_Multi-thread_CPU\EDT_Multi-thread_CPU.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.07

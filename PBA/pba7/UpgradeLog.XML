@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="2D PBA">
+</Property><Property Name="Solution File" Value="C:\Documents and Settings\wdx\桌面\2D PBA - Released\2D PBA.sln">
+</Property><Property Name="User Options File" Value="C:\Documents and Settings\wdx\桌面\2D PBA - Released\2D PBA.suo">
+</Property><Property Name="Date" Value="2011年4月2日">
+</Property><Property Name="Time" Value="9:18">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="2D PBA.sln" Description="File successfully backed up as C:\Documents and Settings\wdx\桌面\2D PBA - Released\2D PBA.sln.old">
+</Event><Event ErrorLevel="0" Project="" Source="2D PBA.suo" Description="File successfully backed up as C:\Documents and Settings\wdx\桌面\2D PBA - Released\2D PBA.suo.old">
+</Event><Event ErrorLevel="2" Project="2D PBA" Source="2D PBA.vcproj" Description="The following error has occurred during XML parsing:&#xA;&#xA;File: C:\Documents and Settings\wdx\桌面\2D PBA - Released\2D PBA.vcproj&#xA;Line: 10&#xA;Column: 2&#xA;Error Message:&#xA;'9.00' violates enumeration constraint of '7.00 7,00 7.10 7,10 8.00 8,00'.&#xA;The attribute 'Version' with value '9.00' failed to parse.&#xA;&#xA;The file 'C:\Documents and Settings\wdx\桌面\2D PBA - Released\2D PBA.vcproj' has failed to load.">
+</Event><Event ErrorLevel="2" Project="2D PBA" Source="2D PBA.vcproj" Description="Project upgrade failed.">
+</Event><Event ErrorLevel="3" Project="2D PBA" Source="2D PBA.vcproj" Description="Not Converted">
+</Event><Event ErrorLevel="0" Project="" Source="2D PBA.sln" Description="The solution file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="" Source="2D PBA.sln" Description="No Conversion Required">
+</Event></UpgradeLog>

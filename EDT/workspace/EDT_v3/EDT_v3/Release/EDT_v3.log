@@ -1,0 +1,30 @@
+﻿Build started 2011/3/17 20:52:02.
+     1>Project "T:\workspace\EDT_v3\EDT_v3\EDT_v3.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Release\EDT_v3.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>main.cpp(166): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(249) : see declaration of 'freopen'
+     1>main.cpp(168): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(304) : see declaration of 'scanf'
+     1>main.cpp(171): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(304) : see declaration of 'scanf'
+     1>main.cpp(182): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files\Microsoft Visual Studio 10.0\VC\include\stdio.h(249) : see declaration of 'freopen'
+       Link:
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"T:\workspace\EDT_v3\Release\EDT_v3.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\EDT_v3.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"T:\workspace\EDT_v3\Release\EDT_v3.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"T:\workspace\EDT_v3\Release\EDT_v3.lib" /MACHINE:X86 Release\main.obj
+         Generating code
+         Finished generating code
+         EDT_v3.vcxproj -> T:\workspace\EDT_v3\Release\EDT_v3.exe
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"T:\workspace\EDT_v3\Release\EDT_v3.exe;#1" /manifest Release\EDT_v3.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Release\EDT_v3.unsuccessfulbuild".
+         Touching "Release\EDT_v3.lastbuildstate".
+     1>Done Building Project "T:\workspace\EDT_v3\EDT_v3\EDT_v3.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.08

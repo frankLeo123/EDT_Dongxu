@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="pba">
+      <UniqueIdentifier>{40b9b16b-ef25-40e9-92da-1152aa350a62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ma">
+      <UniqueIdentifier>{1f69de6f-d4e3-459f-9e0a-f27fa2bb863d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pba\pba2D.h">
+      <Filter>pba</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pba\pba2DKernel.h">
+      <Filter>pba</Filter>
+    </ClInclude>
+    <ClInclude Include="ma.h">
+      <Filter>ma</Filter>
+    </ClInclude>
+    <ClInclude Include="maKernel.h">
+      <Filter>ma</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CUDA_Build_Rule Include="src\pba\pba2DHost.cu">
+      <Filter>pba</Filter>
+    </CUDA_Build_Rule>
+    <CUDA_Build_Rule Include="maHost.cu">
+      <Filter>ma</Filter>
+    </CUDA_Build_Rule>
+  </ItemGroup>
+</Project>

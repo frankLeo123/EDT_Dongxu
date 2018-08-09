@@ -1,0 +1,185 @@
+
+/*----FUNCTION-----------------------------------------------------------------
+ * 
+ *  Description:  Calvin Maurer's EDT (Euclidean DistanceTransform): 
+ *
+ * REFERENCE
+ *  Paper: Calvin Maurer et. al. PAMI feb. 2003 
+ *
+ *  Implementation "inspired" in the LTI lib:
+ *    http://ltilib.sourceforge.net
+ *  
+ *  Distances are calculated only where pixels are equal to 1
+ *
+ * - PARAMETER ----------------------------------------------------------------
+ *      Mode   Type             Name            Description
+ * ----------------------------------------------------------------------------
+ *    in-out:  ImgPUInt32         im            binary image on input;
+ *                                              grayscale on output, with
+ *                                              squared distance transform.
+ *----------------------------------------------------------------------------*/
+
+#include "maurer2003.h"
+#include "common.h"
+
+int edt_1d_vertical(Img *im)
+{
+   int   rows=im->rows, r,
+         cols=im->cols, c;
+   int b;
+   for (c=0; c < cols; c++) {
+      b=1;
+      for (r=1; r<rows; r++)
+         if (RC(im,r,c) > RC(im,r-1,c) + b) {
+            RC(im,r,c) = RC(im,r-1,c) + b;
+            b += 2;
+         } else
+            b = 1;
+      b=1;
+      for (r=rows-2; r >= 0; r--) {
+         if (RC(im,r,c) > RC(im,r+1,c) + b) {
+            RC(im,r,c) = RC(im,r+1,c) + b;
+            b += 2;
+         } else
+            b = 1;
+      }
+   }
+   /* NOTE: Lotufo's implementation (obtained by requesting him) of this first 
+    * part  is much less readable. Although pointers could be used more 
+    * efficiently, this first part is much faster than the 2nd part and is not 
+    * worth optimizing.  So I kept it readable, close to the paper's pseudocode.  
+    */
+
+   return 0;
+}
+
+int edt_maurer_2D_from_1D(Img *im);
+
+int
+edt_maurer2003(Img *im)
+{
+   char *fname="edt_maurer2003";
+   int i,r,c;
+   int stat;
+   int infty;
+
+   //assert(im->isbinary);
+   r = im->rows; c = im->cols;
+   infty = MAXINT - r*r - c*c;
+   for (i=0; i < r*c; i++)
+      if (im->data[i] == FG)
+         im->data[i] = infty;
+   // Vertical columnwise EDT
+   stat = edt_1d_vertical(im);
+   // Lotufo's 1D EDT is equivalent to Maurer's D1.
+   // There is a remark in section 5 of Maurer's paper that says
+   // D1 can be calculated using a routine like this.
+   //CHECK_RET_STATUS(false);
+   stat = edt_maurer_2D_from_1D(im);      
+   //CHECK_RET_STATUS(false);
+
+   //im->isbinary = false;
+   return 0;
+}
+
+int maurer_voronoi_edt_2D(Img *im, int *im_row, int *g, int *h);
+int ans;
+int
+edt_maurer_2D_from_1D(Img *im)
+{
+   int stat;
+   int i1, *g, *h; // same naming as in the paper
+   char *fname="edt_maurer_2D_from_1D";
+
+   int ncols = im->cols;
+   int nrows = im->rows;
+
+   // Call voronoi_edt_2D for every row.
+   // OBS: g and h are internal to maurer_voronoi_edt_2d and are
+   // pre-allocated here for efficiency.
+   g = (int*)malloc(sizeof(int)*ncols);
+	   /*animal_malloc_array(int, ncols);
+       if (!g) {
+          animal_err_flush_trace();                                
+          animal_err_register(fname, ANIMAL_ERROR_MALLOC_FAILED,"");  
+          return false;                                          
+       } */                                                       
+   h = (int*)malloc(sizeof(int)*ncols);
+	   /*animal_malloc_array(int, ncols);
+       if (!h) {
+          animal_err_flush_trace();                                
+          animal_err_register(fname, ANIMAL_ERROR_MALLOC_FAILED,"");  
+          return false;                                          
+       } */                                                       
+
+
+   int *im_row;
+   im_row = im->data;
+   for (i1=0; i1 < nrows; ++i1, im_row += ncols) {
+      stat = maurer_voronoi_edt_2D(im, im_row,  /* internal: */ g, h);
+      //CHECK_RET_STATUS(false);
+   }
+   free(g); free(h);
+
+   return 1;
+}
+
+int remove_edt(long long du, long long dv, long long dw, 
+                      long long u,  long long v,  long long w);
+
+int
+maurer_voronoi_edt_2D(Img *im, int *im_row, int *g, int *h)
+{
+   int l, i, ns, tmp0, tmp1, tmp2, r,c;
+   int infty, fi;
+
+   r = im->rows; c=im->cols;
+   infty = MAXINT - r*r - c*c;
+
+   l = -1;
+   for (i=0; i < c; ++i){
+      if ((fi = im_row[i]) != infty) {
+         while ( l >= 1 && remove_edt(g[l-1], g[l], fi, h[l-1], h[l], i) )
+            --l;
+         ++l; g[l] = fi; h[l] = i;
+      }
+   }
+
+   // The following are lines 15-25 of the article
+   if ((ns=l) == -1) return 1;
+   l = 0;
+   for (i=0; i < c; ++i) {
+      tmp0 = h[l] - i;
+      tmp1 = g[l] + tmp0*tmp0;
+      while(1) {
+         if (l >= ns) break;
+	
+         tmp2 = h[l+1] - i;
+
+         if (tmp1 <= g[l+1] + tmp2*tmp2) break;
+         ++l;
+         tmp0 = h[l] - i;
+         tmp1 = g[l] + tmp0*tmp0;
+      }
+
+      im_row[i] = tmp1;
+   }
+
+   return 1;
+}
+
+
+inline int 
+remove_edt(long long du, long long dv, long long dw, 
+           long long u,  long long v,  long long w)
+{
+    // 11 integer expressions
+    long long a = v - u,
+        b = w - v,
+        c = w - u;
+//	long long tmp = (long long)(a*b)*(long long)c;
+//	long long tmp1 = (long long)c*(long long)dv - b*du - a *dw;
+    return ( c*dv - b*du - a*dw > a*b*c );
+}
+
+

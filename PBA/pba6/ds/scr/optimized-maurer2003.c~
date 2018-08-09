@@ -1,0 +1,314 @@
+
+/*----FUNCTION-----------------------------------------------------------------
+ * 
+ *  Description:  Calvin Maurer's EDT (Euclidean DistanceTransform): 
+ *
+ * REFERENCE
+ *  Paper: Calvin Maurer et. al. PAMI feb. 2003 
+ *
+ *  Implementation "inspired" in the LTI lib:
+ *    http://ltilib.sourceforge.net
+ *  
+ *  Distances are calculated only where pixels are equal to 1
+ *
+ * - PARAMETER ----------------------------------------------------------------
+ *      Mode   Type             Name            Description
+ * ----------------------------------------------------------------------------
+ *    in-out:  ImgPUInt32         im            binary image on input;
+ *                                              grayscale on output, with
+ *                                              squared distance transform.
+ *----------------------------------------------------------------------------*/
+
+#include "maurer2003.h"
+#include "common.h"
+#include <math.h>
+
+int edt_optimized_1d_vertical(Img *im)
+{
+   int   rows=im->rows, r,
+         cols=im->cols, c;
+   int b;
+   for (c=0; c < cols; c++) {
+      b=1;
+      for (r=1; r<rows; r++)
+         if (RC(im,r,c) > RC(im,r-1,c) + b) {
+            RC(im,r,c) = RC(im,r-1,c) + b;
+            b += 2;
+         } else
+            b = 1;
+      b=1;
+      for (r=rows-2; r >= 0; r--) {
+         if (RC(im,r,c) > RC(im,r+1,c) + b) {
+            RC(im,r,c) = RC(im,r+1,c) + b;
+            b += 2;
+         } else
+            b = 1;
+      }
+		/*int b=-1;
+		for (r=0;r<rows;r++)
+		{
+			if (RC(im,r,c)==0)
+			{
+				int e = r,s=1;
+				while(1)
+				{
+					b++;
+					e--;
+					if (b>e) break;
+					RC(im,b,c) = RC(im,b-1,c) + s;
+					RC(im,e,c) = RC(im,e+1,c) + s;
+					s+=2;
+				}
+				b=r;
+			}
+		}
+
+		int e = r,s=1;
+		while(1)
+		{
+			b++;
+			e--;
+			if (b>e) break;
+			RC(im,b,c) = RC(im,b-1,c) + s;
+			RC(im,e,c) = RC(im,e+1,c) + s;
+			s+=2;
+		}*/
+   }
+   /* NOTE: Lotufo's implementation (obtained by requesting him) of this first 
+    * part  is much less readable. Although pointers could be used more 
+    * efficiently, this first part is much faster than the 2nd part and is not 
+    * worth optimizing.  So I kept it readable, close to the paper's pseudocode.  
+    */
+
+   return 0;
+}
+
+int edt_optimized_maurer_2D_from_1D(Img *im);
+
+int
+edt_optimized_maurer2003(Img *im)
+{
+   char *fname="edt_maurer2003";
+   int i,r,c;
+   int stat;
+   int infty;
+
+   //assert(im->isbinary);
+   r = im->rows; c = im->cols;
+   infty = MAXINT - r*r - c*c;
+   for (i=0; i < r*c; i++)
+      if (im->data[i] == FG)
+         im->data[i] = infty;
+   // Vertical columnwise EDT
+   stat = edt_optimized_1d_vertical(im);
+   // Lotufo's 1D EDT is equivalent to Maurer's D1.
+   // There is a remark in section 5 of Maurer's paper that says
+   // D1 can be calculated using a routine like this.
+   //CHECK_RET_STATUS(false);
+   stat = edt_optimized_maurer_2D_from_1D(im);      
+   //CHECK_RET_STATUS(false);
+
+   //im->isbinary = false;
+   return 0;
+}
+
+int optimized_maurer_voronoi_edt_2D(Img *im, int *im_row, int *g, int *h);
+
+int
+edt_optimized_maurer_2D_from_1D(Img *im)
+{
+   int stat;
+   int i1, *g, *h; // same naming as in the paper
+   char *fname="edt_maurer_2D_from_1D";
+
+   int ncols = im->cols;
+   int nrows = im->rows;
+
+   // Call voronoi_edt_2D for every row.
+   // OBS: g and h are internal to maurer_voronoi_edt_2d and are
+   // pre-allocated here for efficiency.
+   g = (int*)malloc(sizeof(int)*ncols);
+	   /*animal_malloc_array(int, ncols);
+       if (!g) {
+          animal_err_flush_trace();                                
+          animal_err_register(fname, ANIMAL_ERROR_MALLOC_FAILED,"");  
+          return false;                                          
+       } */                                                       
+   h = (int*)malloc(sizeof(int)*ncols);
+	   /*animal_malloc_array(int, ncols);
+       if (!h) {
+          animal_err_flush_trace();                                
+          animal_err_register(fname, ANIMAL_ERROR_MALLOC_FAILED,"");  
+          return false;                                          
+       } */                                                       
+
+
+   int *im_row;
+   im_row = im->data;
+
+   for (i1=0; i1 < nrows; ++i1, im_row += ncols) {
+      stat = optimized_maurer_voronoi_edt_2D(im, im_row,  /* internal: */ g, h);
+      //CHECK_RET_STATUS(false);
+   }
+
+   free(g); free(h);
+
+   return 1;
+}
+
+int remove_edt(int du, int dv, int dw, 
+                      int u,  int v,  int w);
+
+
+int getNearestPoint(Img *im,int *im_row,int x)
+{
+	int r,c,ans=-1,minDis;
+	r=im->rows;
+	c=im->cols;
+	int infty = MAXINT - r*r - c*c;
+	minDis = infty;
+	int i=x,j=x;
+	while (1)
+	{
+		if (i>=0)
+		{
+			int fi = im_row[i];
+			if (fi!=infty)
+			{
+				ans = i;
+				minDis = fi + (i-x)*(i-x);
+				break;
+			}
+		}
+		if (j<=c-1)
+		{
+			int fj = im_row[j];
+			if (fj!=infty)
+			{
+				ans = j;
+				minDis = fj + (j-x)*(j-x);
+				break;
+			}
+		}
+		i--;
+		j++;
+	}
+	int rad = (int)(sqrt(im_row[ans]+1e-8));
+	int b = x - rad < 0 ? 0 : x - rad;
+	int e = x + rad > c-1 ? c-1 : x+rad;
+	for (int k = b ;k <= e ; k++)
+	{
+		int fk = im_row[k];
+		int xk = (k-x)*(k-x);
+		int dis = fk + xk;
+		if (dis<minDis)
+		{
+			minDis = dis ;
+			ans = k;
+		}
+	}
+	return ans ;
+}
+
+void binaryCalculate(Img *im,int *im_row,int b,int bx,int e,int ex,int *g,int *h)
+{
+	int c = im->cols;
+	int r = im->rows;
+	int midL = (b+e)/2;
+	int midR = midL + 1;
+	if (b!=e)
+	{
+		int midLx = getNearestPoint(im,im_row,midL);
+		int dis = (midLx - midL)*(midLx - midL) + im_row[midLx];
+		if (midLx == bx)
+		{
+			for (int i=b+1;i<=midL;i++) g[i] = dis;
+		}
+		else 
+		{
+			g[midL] = dis;
+			binaryCalculate(im,im_row,b,bx,midL,midLx,g,h);
+		}
+	}
+
+	if (midR>=c) return ;
+	int midRx = getNearestPoint(im,im_row,midR);
+	int dis = (midRx - midR)*(midRx-midR) + im_row[midRx];
+	if (midRx == ex)
+	{
+		for (int i=midR;i<=e-1;i++) g[i]=dis;
+	}
+	else 
+	{
+		g[midR] = dis;
+		binaryCalculate(im,im_row,midR,midRx,e,ex,g,h);
+	}
+}
+
+int
+optimized_maurer_voronoi_edt_2D(Img *im, int *im_row, int *g, int *h)
+{
+   	int l, i, ns, tmp0, tmp1, tmp2, r,c;
+   	int infty, fi;
+	
+   	r = im->rows; c=im->cols;
+   	infty = MAXINT - r*r - c*c;
+   	int b=0,e=c-1;
+   	int bx = getNearestPoint(im,im_row,b);
+   	int ex = getNearestPoint(im,im_row,e);
+   	int disb = (bx-b)*(bx-b) + im_row[bx];
+   	int dise = (ex-e)*(ex-e) + im_row[ex];
+   	g[b] = disb;
+   	g[e] = dise;
+   	binaryCalculate(im,im_row,b,bx,e,ex,g,h);
+   	for (i=0;i<c;i++) im_row[i]=g[i];
+/*
+   l = -1;
+   for (i=0; i < c; ++i){
+      if ((fi = im_row[i]) != infty) {
+         while ( l >= 1 && remove_edt(g[l-1], g[l], fi, h[l-1], h[l], i) )
+            --l;
+         ++l; g[l] = fi; h[l] = i;
+      }
+   }
+
+   // The following are lines 15-25 of the article
+   if ((ns=l) == -1) return 1;
+
+   l = 0;
+   tmp0 = h[l] ;
+   tmp1 = g[l] + tmp0*tmp0;
+   while(1)
+   {
+		if (l>=ns) break;
+		tmp2 = h[l+1] ;
+		if (tmp1<=g[l+1]+tmp2*tmp2) break;
+		++l;
+		tmp0 = h[l];
+		tmp1 = g[l] + tmp0*tmp0;
+   }
+   im_row[0] = tmp1 ;
+   for (i=1; i < c; ++i) {
+      //tmp0 = h[l] - i;
+      //tmp1 = g[l] + tmp0*tmp0;
+	  tmp1 = tmp1 - (tmp0<<1) + 1 ;
+	  tmp0 = h[l]-i;
+      while(1) {
+         if (l >= ns) break;
+
+         tmp2 = h[l+1] - i;
+
+         if (tmp1 <= g[l+1] + tmp2*tmp2) break;
+
+         ++l;
+         tmp0 = h[l] - i;
+         tmp1 = g[l] + tmp0*tmp0;
+      }
+
+      im_row[i] = tmp1;
+   }
+*/
+   return 1;
+}
+
+

@@ -1,0 +1,70 @@
+<!DOCTYPE cpj>
+<cpj version="1.1" >
+ <session>
+  <name>Session2</name>
+  <device>
+   <name>Device_0</name>
+   <number>0</number>
+  </device>
+  <progpath>"G:/PBA/bin/debug/2D PBA.exe"</progpath>
+  <cmdlineargs>--noprompt</cmdlineargs>
+  <workdirpath>G:/PBA/bin/debug</workdirpath>
+  <datetime>14 ?? 2011 09:30:36</datetime>
+ </session>
+ <session>
+  <name>Session3</name>
+  <device>
+   <name>Device_0</name>
+   <number>0</number>
+  </device>
+  <progpath>"G:/PBA/bin/debug/2D PBA.exe"</progpath>
+  <cmdlineargs>--noprompt</cmdlineargs>
+  <workdirpath>G:/PBA/bin/debug</workdirpath>
+  <datetime>14 ?? 2011 09:31:01</datetime>
+ </session>
+ <session>
+  <name>Session4</name>
+  <device>
+   <name>Device_0</name>
+   <number>0</number>
+  </device>
+  <progpath>"G:/PBA/bin/debug/2D PBA.exe"</progpath>
+  <cmdlineargs>--noprompt</cmdlineargs>
+  <workdirpath>G:/PBA/bin/debug</workdirpath>
+  <datetime>14 ?? 2011 09:31:21</datetime>
+ </session>
+ <session>
+  <name>Session5</name>
+  <device>
+   <name>Device_0</name>
+   <number>0</number>
+  </device>
+  <progpath>"G:/PBA/bin/debug/2D PBA.exe"</progpath>
+  <cmdlineargs>--noprompt</cmdlineargs>
+  <workdirpath>G:/PBA/bin/debug</workdirpath>
+  <datetime>14 ?? 2011 09:31:37</datetime>
+ </session>
+ <session>
+  <name>Session6</name>
+  <device>
+   <name>Device_0</name>
+   <number>0</number>
+  </device>
+  <progpath>"G:/PBA/bin/debug/2D PBA.exe"</progpath>
+  <cmdlineargs>--noprompt</cmdlineargs>
+  <workdirpath>G:/PBA/bin/debug</workdirpath>
+  <datetime>14 ?? 2011 09:31:58</datetime>
+ </session>
+ <session>
+  <name>Session7</name>
+  <device>
+   <name>Device_0</name>
+   <number>0</number>
+  </device>
+  <progpath>"G:/PBA/bin/debug/2D PBA.exe"</progpath>
+  <cmdlineargs>--noprompt</cmdlineargs>
+  <workdirpath>G:/PBA/bin/debug</workdirpath>
+  <datetime>14 ?? 2011 09:32:31</datetime>
+ </session>
+</cpj>
+
